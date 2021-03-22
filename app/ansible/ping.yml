@@ -1,0 +1,6 @@
+---
+- hosts: awspocservers
+  become: true
+
+  tasks:
+    - ping:

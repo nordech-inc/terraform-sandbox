@@ -1,0 +1,6 @@
+---
+app_user: "ubuntu"
+http_host: "html"
+http_conf: "html.conf"
+http_port: "80"
+disable_default: true
