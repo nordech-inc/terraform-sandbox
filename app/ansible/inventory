@@ -2,10 +2,7 @@
 localhost
 
 [terraform]
-ec2-18-204-42-211.compute-1.amazonaws.com
 
 [terraform:vars]
-ansible_user=ubuntu
-ansible_ssh_private_key_file=~/.ssh/aws-terraform.pem
-
-# [jenkins]
+ansible_user=
+ansible_ssh_private_key_file=
