@@ -1,5 +1,5 @@
 ---
-- hosts: awspocservers
+- hosts: test
   become: true
 
   tasks:

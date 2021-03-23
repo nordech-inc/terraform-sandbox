@@ -154,7 +154,7 @@ variable "ec2_instance_type" {
 variable "ec2_ssh_key_name" {
   description = "ssh key name for EC2 instance"
   type        = string
-  default     = "nginx-test-ec2"
+  default     = "aws-terraform"
 }
 
 variable "ec2_tags" {

@@ -24,18 +24,18 @@ module "vpc" {
 }
 
 # Security group module configuration
-module "security-group-db" {
-  source                = "terraform-aws-modules/security-group/aws"
-  version               = "3.18.0"
+# module "security-group-db" {
+#   source                = "terraform-aws-modules/security-group/aws"
+#   version               = "3.18.0"
 
-  name                  = var.sg_db_name
-  vpc_id                = module.vpc.vpc_id
+#   name                  = var.sg_db_name
+#   vpc_id                = module.vpc.vpc_id
 
-  ingress_cidr_blocks   = var.sg_db_ingress_cidr_blocks
-  ingress_rules         = var.sg_db_ingress_rules
-  egress_cidr_blocks    = var.sg_db_egress_cidr_blocks
-  egress_rules          = var.sg_db_egress_rules
-}
+#   ingress_cidr_blocks   = var.sg_db_ingress_cidr_blocks
+#   ingress_rules         = var.sg_db_ingress_rules
+#   egress_cidr_blocks    = var.sg_db_egress_cidr_blocks
+#   egress_rules          = var.sg_db_egress_rules
+# }
 module "security-group-web" {
   source                = "terraform-aws-modules/security-group/aws"
   version               = "3.18.0"
@@ -48,45 +48,45 @@ module "security-group-web" {
   egress_cidr_blocks    = var.sg_web_egress_cidr_blocks
   egress_rules          = var.sg_web_egress_rules
 }
-module "rds" {
-  source                                = "terraform-aws-modules/rds/aws"
-  version                               = "2.30.0"
+# module "rds" {
+#   source                                = "terraform-aws-modules/rds/aws"
+#   version                               = "2.30.0"
 
-  engine                                = "mysql"
-  engine_version                        = "5.7.19"
-  family                                = "mysql5.7"
-  major_engine_version                  = "5.7"
-  instance_class                        = "db.t2.micro"
+#   engine                                = "mysql"
+#   engine_version                        = "5.7.19"
+#   family                                = "mysql5.7"
+#   major_engine_version                  = "5.7"
+#   instance_class                        = "db.t2.micro"
   
-  allocated_storage                     = 5
-  deletion_protection                   = false
+#   allocated_storage                     = 5
+#   deletion_protection                   = false
   
-  identifier                            = "terraformdb"
+#   identifier                            = "terraformdb"
 
-  name                                  = "terraformdb"
-  username                              = "terraform"
-  password                              = "terraform"
-  port                                  = "3306"
+#   name                                  = "terraformdb"
+#   username                              = "terraform"
+#   password                              = "terraform"
+#   port                                  = "3306"
 
-  publicly_accessible                   = false
-  multi_az                              = true
-  subnet_ids                            = module.vpc.database_subnets
-  vpc_security_group_ids                = [module.security-group-db.this_security_group_id]
-  # iam_database_authentication_enabled   = true
+#   publicly_accessible                   = false
+#   multi_az                              = true
+#   subnet_ids                            = module.vpc.database_subnets
+#   vpc_security_group_ids                = [module.security-group-db.this_security_group_id]
+#   # iam_database_authentication_enabled   = true
 
 
-  maintenance_window                    = "Mon:00:00-Mon:03:00"
-  backup_window                         = "03:00-06:00"
+#   maintenance_window                    = "Mon:00:00-Mon:03:00"
+#   backup_window                         = "03:00-06:00"
   
-  backup_retention_period               = 0
-  skip_final_snapshot                   = true
+#   backup_retention_period               = 0
+#   skip_final_snapshot                   = true
 
-  tags = {
-    Terraform   = "true"
-    Environment = "dev"
-  }
+#   tags = {
+#     Terraform   = "true"
+#     Environment = "dev"
+#   }
 
-}
+# }
 
 module "ec2-instance" {
   source                      = "terraform-aws-modules/ec2-instance/aws"
@@ -103,14 +103,14 @@ module "ec2-instance" {
   subnet_id                   = module.vpc.public_subnets[0]
 
   tags                        = var.ec2_tags
-  user_data                   = <<EOF
-#!/bin/sh
-sudo apt update
-sudo apt upgrade -y
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-get install -y mysql-client
-EOF
+#   user_data                   = <<EOF
+# #!/bin/sh
+# sudo apt update
+# sudo apt upgrade -y
+# sudo apt-get update
+# sudo apt-get upgrade -y
+# sudo apt-get install -y mysql-client
+# EOF
 }
 
 
@@ -118,12 +118,12 @@ output "ec2_dns_hostnames" {
   value = module.ec2-instance.*.public_dns
 }
 
-output "rds_instance_endpoint" {
-  value = module.rds.this_db_instance_endpoint
-}
-output "rds_instance_address" {
-  value = module.rds.this_db_instance_address
-}
+# output "rds_instance_endpoint" {
+#   value = module.rds.this_db_instance_endpoint
+# }
+# output "rds_instance_address" {
+#   value = module.rds.this_db_instance_address
+# }
 
 # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html
 # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateVPC.html
