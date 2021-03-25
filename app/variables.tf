@@ -40,6 +40,11 @@ variable "vpc_public_subnets" {
   default     = ["10.20.7.0/24", "10.20.8.0/24", "10.20.9.0/24"]
 }
 
+variable "vpc_create_db_subnet_grp" {
+  description = "Database subnet group for VPC"
+  type        = bool
+  default     = true
+}
 variable "vpc_enable_nat_gateway" {
   description = "NAT gateway for VPC"
   type        = bool
@@ -121,18 +126,104 @@ variable "sg_db_egress_rules" {
   type        = list(string)
   default     = ["all-all"]
 }
+
+variable "rds_identifier" {
+  description = "Identifier for RDS"
+  type        = string
+  default     = "terraform-db-cluster"
+}
+variable "rds_engine" {
+  description = "Engine for RDS"
+  type        = string
+  default     = "mysql"
+}
+
+variable "rds_engine_version" {
+  description = "Engine version for RDS"
+  type        = string
+  default     = "8.0.20"
+}
+variable "rds_family" {
+  description = "Family for RDS"
+  type        = string
+  default     = "mysql8.0"
+}
+variable "rds_major_engine_version" {
+  description = "Major engine version for RDS"
+  type        = string
+  default     = "8.0"
+}
+variable "rds_instance_class" {
+  description = "Instance class for RDS"
+  type        = string
+  default     = "db.t3.micro"
+}
+variable "rds_allocated_storage" {
+  description = "Allocated storage size for RDS"
+  type        = number
+  default     = 5
+}
+
+variable "rds_db_name" {
+  description = "DB name for RDS"
+  type        = string
+  default     = "terraformdb"
+}
+variable "rds_db_username" {
+  description = "DB username for RDS"
+  type        = string
+  default     = "terraform"
+}
+variable "rds_db_password" {
+  description = "DB password for RDS"
+  type        = string
+  default     = "terraform"
+}
+
+variable "rds_db_port" {
+  description = "DB port for RDS"
+  type        = number
+  default     = 3306
+}
+
 variable "ec2_name" {
   description = "name for EC2 instance"
   type        = string
   default     = "terraform-ec2-cluster"
 }
-
+variable "rds_multi_az" {
+  description = "Multi AZ for RDS"
+  type        = bool
+  default     = true
+}
+variable "rds_maintenance_window" {
+  description = "Maintenance window for RDS"
+  type        = string
+  default     = "Mon:00:00-Mon:03:00"
+}
+variable "rds_backup_window" {
+  description = "Backup window for RDS"
+  type        = string
+  default     = "03:00-06:00"
+}
 variable "ec2_instance_count" {
   description = "instance count for EC2 instance"
   type        = number
   default     = 1
 }
-
+variable "rds_skip_final_snapshot" {
+  description = "Skip final snapshot for RDS"
+  type        = bool
+  default     = true
+}
+variable "rds_tags" {
+  description = "tags for RDS"
+  type        = map(string)
+  default     = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
 variable "ec2_associate_public_ip" {
   description = "associate public ip for EC2 instance"
   type        = bool
