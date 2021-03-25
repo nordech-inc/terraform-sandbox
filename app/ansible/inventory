@@ -1,8 +1,0 @@
-[test]
-localhost
-
-[terraform]
-
-[terraform:vars]
-ansible_user=
-ansible_ssh_private_key_file=

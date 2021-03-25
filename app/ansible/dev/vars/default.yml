@@ -2,5 +2,6 @@
 app_user: "ubuntu"
 http_host: "html"
 http_conf: "html.conf"
-http_port: "80"
+http_port: 80
+https_port: 443
 disable_default: true

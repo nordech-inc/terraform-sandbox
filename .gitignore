@@ -36,3 +36,5 @@ terraform.rc
 .env*
 ansible/files
 inventory
+*.gz
+*.sql
